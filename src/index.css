@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Plus Jakarta Sans", "Inter", sans-serif;
+  
+  --color-surface-bg: #fbf8ff;
+  --color-surface-lavender: #F8F9FF;
+  --color-surface-blue: #F0F4FF;
+  --color-primary-brand: #0040df;
+  --color-secondary-brand: #7b24dc;
+  --color-text-display: #0F172A;
+  --color-text-muted: #64748B;
+  --color-success-glow: #10B981;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-surface-bg);
+  }
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, #0040df 0%, #7b24dc 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.primary-gradient-bg {
+  background: linear-gradient(135deg, #0040df 0%, #7b24dc 100%);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+
+@keyframes bounce-slow {
+  0%, 100% {
+    transform: translateY(-4px);
+    animation-timing-function: cubic-bezier(0.8,0,1,1);
+  }
+  50% {
+    transform: translateY(4px);
+    animation-timing-function: cubic-bezier(0,0,0.2,1);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 4s infinite ease-in-out;
+}

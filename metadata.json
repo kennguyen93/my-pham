@@ -1,0 +1,6 @@
+{
+  "name": "Cloudy Self-Care",
+  "description": "Naturally Smarter Self-Care. Discover plant-powered sleep, calm, and focus rituals.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
