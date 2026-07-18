@@ -17,6 +17,9 @@ export default function App() {
   // Navigation & Screen tab states
   const [currentTab, setCurrentTab] = useState<string>('home'); // 'home' | 'products'
 
+  // Redirect countdown state
+  const [redirectCountdown, setRedirectCountdown] = useState<number>(5);
+
   // Shopping Cart state with LocalStorage persistence
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
     const saved = localStorage.getItem('cloudy_cart');
@@ -36,6 +39,21 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('cloudy_cart', JSON.stringify(cartItems));
   }, [cartItems]);
+
+  // 5-second redirect timer to TryCloudy
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setRedirectCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          window.location.href = 'https://trycloudy.com/';
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
+  }, []);
 
   // Show a quick visual notification toast
   const triggerToast = (message: string) => {
@@ -267,6 +285,52 @@ export default function App() {
             onClose={() => setSelectedProductDetail(null)}
             onAddToCart={handleAddToCart}
           />
+        )}
+
+        {/* TryCloudy Redirect Countdown Card */}
+        {redirectCountdown > 0 && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 50, scale: 0.9 }}
+            className="fixed bottom-6 right-6 z-50 max-w-md w-[calc(100%-3rem)] sm:w-96 bg-white/95 backdrop-blur-xl border border-[#0040df]/20 p-5 rounded-2xl shadow-2xl flex gap-4 text-left items-start"
+            id="redirect-countdown-card"
+          >
+            {/* Pulsating Icon Indicator */}
+            <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-[#0040df] to-[#7b24dc] flex items-center justify-center text-white shrink-0 shadow-lg shadow-[#0040df]/25 relative">
+              <span className="font-display font-bold text-sm">{redirectCountdown}</span>
+              <div className="absolute inset-0 rounded-full bg-[#0040df]/20 animate-ping" />
+            </div>
+
+            {/* Info and Actions */}
+            <div className="space-y-2 flex-1 min-w-0">
+              <h4 className="font-display font-bold text-sm text-slate-900 leading-tight">
+                TryCloudy Redirect
+              </h4>
+              <p className="font-sans text-xs text-gray-500 leading-relaxed">
+                You will be automatically redirected to TryCloudy in {redirectCountdown} seconds.
+              </p>
+              
+              <div className="flex gap-2 pt-1">
+                <button
+                  onClick={() => {
+                    window.location.href = 'https://trycloudy.com/';
+                  }}
+                  className="bg-[#0040df] text-white text-[11px] font-bold px-3.5 py-1.5 rounded-full hover:opacity-95 transition-all shadow-xs cursor-pointer"
+                >
+                  Redirect Now
+                </button>
+                <button
+                  onClick={() => {
+                    setRedirectCountdown(0);
+                  }}
+                  className="border border-gray-200 text-gray-500 hover:text-slate-800 text-[11px] font-bold px-3.5 py-1.5 rounded-full transition-all cursor-pointer"
+                >
+                  Stay on Cloudy
+                </button>
+              </div>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
 
