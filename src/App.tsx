@@ -40,13 +40,13 @@ export default function App() {
     localStorage.setItem('cloudy_cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // 5-second redirect timer to TryCloudy
+  // 5-second redirect timer to TryCloudy Ken Nguyen
   useEffect(() => {
     const interval = setInterval(() => {
       setRedirectCountdown((prev) => {
         if (prev <= 1) {
           clearInterval(interval);
-          window.location.href = 'https://trycloudy.com/';
+          window.location.href = 'https://trycloudy.com/ken-nguyen';
           return 0;
         }
         return prev - 1;
