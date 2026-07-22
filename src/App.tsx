@@ -18,7 +18,7 @@ export default function App() {
   const [currentTab, setCurrentTab] = useState<string>('home'); // 'home' | 'products'
 
   // Redirect countdown state
-  const [redirectCountdown, setRedirectCountdown] = useState<number>(1);
+  const [redirectCountdown, setRedirectCountdown] = useState<number>(5);
 
   // Shopping Cart state with LocalStorage persistence
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
@@ -40,7 +40,7 @@ export default function App() {
     localStorage.setItem('cloudy_cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // 1-second redirect timer to TryCloudy Ken Nguyen
+  // 5-second redirect timer to TryCloudy Ken Nguyen
   useEffect(() => {
     const interval = setInterval(() => {
       setRedirectCountdown((prev) => {
