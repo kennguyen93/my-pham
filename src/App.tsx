@@ -17,8 +17,8 @@ export default function App() {
   // Navigation & Screen tab states
   const [currentTab, setCurrentTab] = useState<string>('home'); // 'home' | 'products'
 
-  // Redirect countdown state (disabled)
-  const [redirectCountdown, setRedirectCountdown] = useState<number>(0);
+  // Redirect countdown state
+  const [redirectCountdown, setRedirectCountdown] = useState<number>(6);
 
   // Shopping Cart state with LocalStorage persistence
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
@@ -40,9 +40,19 @@ export default function App() {
     localStorage.setItem('cloudy_cart', JSON.stringify(cartItems));
   }, [cartItems]);
 
-  // Redirect timer (disabled)
+  // 6-second redirect timer to TryCloudy Ken Nguyen
   useEffect(() => {
-    // Redirection disabled by user request
+    const interval = setInterval(() => {
+      setRedirectCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          window.location.href = 'https://trycloudy.com/ken-nguyen';
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(interval);
   }, []);
 
   // Show a quick visual notification toast
@@ -276,6 +286,8 @@ export default function App() {
             onAddToCart={handleAddToCart}
           />
         )}
+
+
       </AnimatePresence>
 
     </div>
